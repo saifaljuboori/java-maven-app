@@ -19,7 +19,7 @@ pipeline {
         stage("build image") {
             steps {
                 script {
-                    buildDockerImage()
+                    buildDockerImage('saljuboori/demo-app:jma-3.0')
                 }
             }
         }
