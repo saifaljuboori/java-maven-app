@@ -1,3 +1,5 @@
+@Library('jenkins-shared-library') _
+
 pipeline {
     agent any
 
@@ -9,8 +11,7 @@ pipeline {
         stage("build jar") {
             steps {
                 script {
-                    echo "building the application..."
-                    sh 'mvn package'
+                    buildJar()
                 }
             }
         }
