@@ -19,9 +19,9 @@ pipeline {
         stage("build and push image") {
             steps {
                 script {
-                    buildDockerImage('saljuboori/demo-app:jma-4.2')
+                    buildDockerImage('saljuboori/demo-app:jma-5.0')
                     dockerLogin()
-                    dockerPush('saljuboori/demo-app:jma-4.2')
+                    dockerPush('saljuboori/demo-app:jma-5.0')
                 }
             }
         }
