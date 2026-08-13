@@ -9,12 +9,14 @@ pipeline {
 
     stages {
         stage("increment version") {
-            steps {
-                script {
-                    incrementVersion()
-                }
-            }
-        }
+           steps {
+              script {
+                 incrementVersion()
+
+                 sh "mvn help:evaluate -Dexpression=project.version -q -DforceStdout"
+             }
+          }
+       }
 
         stage("build jar") {
             steps {
