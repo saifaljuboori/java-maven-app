@@ -11,20 +11,31 @@ pipeline {
         stage("increment version") {
            steps {
               script {
-                 incrementVersion()
+                  incrementVersion()
 
-                 sh "mvn help:evaluate -Dexpression=project.version -q -DforceStdout"
+                  sh '''
+                      echo "===== POM VERSION ====="
+                      grep -n "<version>" pom.xml | head -1
+
+                      echo "===== MAVEN PROJECT VERSION ====="
+                      mvn help:evaluate -Dexpression=project.version -q -DforceStdout
+                  '''
              }
           }
-       }
-
-        stage("build jar") {
-            steps {
-                script {
-                    buildJar()
-                }
-            }
         }
+
+         stage("build jar") {
+               steps {
+                   script {
+                       buildJar()
+
+                      sh '''
+                         echo "===== TARGET JARS ====="
+                         ls -lh target/*.jar
+                      '''
+                  }
+               }
+         }
 
         stage("build and push docker image") {
             steps {
