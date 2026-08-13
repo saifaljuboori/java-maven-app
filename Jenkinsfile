@@ -45,6 +45,13 @@ pipeline {
                     echo "deploying the application..."
                 }
             }
+       }
+        stage("commit version") {
+            steps {
+                script {
+                    commitVersion()
+               }
+            }
         }
     }
 }
