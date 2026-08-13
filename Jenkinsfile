@@ -8,6 +8,14 @@ pipeline {
     }
 
     stages {
+        stage("increment version") {
+            steps {
+                script {
+                    incrementVersion()
+                }
+            }
+        }
+
         stage("build jar") {
             steps {
                 script {
@@ -16,12 +24,17 @@ pipeline {
             }
         }
 
-        stage("build and push image") {
+        stage("build and push docker image") {
             steps {
                 script {
-                    buildDockerImage('saljuboori/demo-app:jma-6.0')
+                    def version = getVersion()
+
+                    env.IMAGE_NAME = "saljuboori/demo-app:${version}"
+
+                    echo "Docker image: ${env.IMAGE_NAME}"
+                    buildDockerImage(env.IMAGE_NAME)
                     dockerLogin()
-                    dockerPush('saljuboori/demo-app:jma-6.0')
+                    dockerPush(env.IMAGE_NAME)
                 }
             }
         }
