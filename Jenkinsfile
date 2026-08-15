@@ -8,6 +8,14 @@ pipeline {
     }
 
     stages {
+        stage("SCM Skip Check") {
+           steps {
+               scmSkip(
+                     deleteBuild: true,
+                     skipPattern: '.*\\[skip ci\\].*'
+              )
+          }
+        }
         stage("increment version") {
            steps {
               script {
