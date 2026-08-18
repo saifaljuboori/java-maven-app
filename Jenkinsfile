@@ -47,10 +47,10 @@ pipeline {
             }
         }
 
-        stage("deploy") {
+        stage("deploy and run image on EC2 server") {
             steps {
                 script {
-                    echo "deploying the application..."
+                    ec2Deploy()
                 }
             }
        }
